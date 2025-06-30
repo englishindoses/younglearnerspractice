@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Month 1: Greetings & Numbers - ESL Games Hub</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/games.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">🎮 ESL Games Hub</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="#lessons">Lessons</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#games">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 id="month-title">🌟 Month 1: Getting Started! 🌟</h1>
+        <p id="month-subtitle">Learn greetings, numbers, and basic English expressions</p>
+        <div class="student-welcome" id="student-welcome" style="display: none; margin-top: 2rem;">
+            <span id="student-name">Student</span>, you're doing great! Keep learning! 🚀
+        </div>
+    </section>
+
+    <main>
+        <!-- Month Progress Overview -->
+        <section class="section">
+            <h2>📊 Your Month 1 Progress</h2>
+            <p>Track your progress through the first month of English learning!</p>
+            
+            <div class="stats-dashboard">
+                <div class="stat-card">
+                    <span class="stat-number" id="month-lessons-completed">0</span>
+                    <span class="stat-label">Lessons Completed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="month-games-played">0</span>
+                    <span class="stat-label">Games Played</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="month-best-score">0</span>
+                    <span class="stat-label">Best Score</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="month-achievements">0</span>
+                    <span class="stat-label">Achievements</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Month 1 Completion</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="month-progress-bar" style="width: 0%;"></div>
+                </div>
+                <p style="text-align: center; margin-top: 0.5rem; color: #667eea; font-weight: bold;">
+                    <span id="progress-percentage">0</span>% Complete
+                </p>
+            </div>
+        </section>
+
+        <!-- Lessons Section -->
+        <section class="section" id="lessons">
+            <h2>📚 Month 1 Lessons</h2>
+            <p>Master the basics of English communication with these fun lessons!</p>
+            
+            <div class="games-grid">
+                <!-- Lesson 1: Revision Lesson -->
+                <div class="game-card lesson-card" data-lesson="revision">
+                    <h3>🔄 Revision Lesson</h3>
+                    <p><strong>Topics:</strong> Greetings & Numbers Review</p>
+                    <p>Perfect for students returning after a break - combines basic greetings and numbers 1-20.</p>
+                    <div class="achievement" id="revision-status">📋 Available</div>
+                    <div class="best-score" id="revision-best-score" style="display: none;">
+                        Best: 0%
+                    </div>
+                    <button class="play-button" onclick="window.open('../games/hello-numbers-game.html', '_blank')">
+                        🎯 Practice Now
+                    </button>
+                </div>
+
+                <!-- Lesson 1: Original Hello Lesson -->
+                <div class="game-card lesson-card" data-lesson="hello">
+                    <h3>👋 Lesson 1: Hello! Nice to Meet You</h3>
+                    <p><strong>Topics:</strong> Greetings, courtesy words</p>
+                    <p>Learn essential greetings and polite expressions for daily conversations.</p>
+                    <div class="achievement">✅ Content Ready</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> Interactive Game Coming Soon
+                    </button>
+                </div>
+
+                <!-- Lesson 2: Numbers & Ages -->
+                <div class="game-card lesson-card" data-lesson="numbers">
+                    <h3>🔢 Lesson 2: Numbers & Ages</h3>
+                    <p><strong>Topics:</strong> Numbers 1-20, age expressions</p>
+                    <p>Master counting and expressing ages in English with fun activities.</p>
+                    <div class="achievement">✅ Content Ready</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> Number Game In Development
+                    </button>
+                </div>
+
+                <!-- Lesson 3: Colors & Objects -->
+                <div class="game-card lesson-card" data-lesson="colors">
+                    <h3>🎨 Lesson 3: Colors & Classroom Objects</h3>
+                    <p><strong>Topics:</strong> Basic colors, school supplies</p>
+                    <p>Identify and describe objects using colors and classroom vocabulary.</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> Color Game In Development
+                    </button>
+                </div>
+
+                <!-- Lesson 4: Family Members -->
+                <div class="game-card lesson-card" data-lesson="family">
+                    <h3>👨‍👩‍👧‍👦 Lesson 4: Family Members</h3>
+                    <p><strong>Topics:</strong> Family vocabulary, possessive 's</p>
+                    <p>Talk about your family and learn relationship words.</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> Family Game In Development
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Available Games Section -->
+        <section class="section" id="games">
+            <h2>🎮 Month 1 Games</h2>
+            <p>Practice what you've learned with these interactive games!</p>
+            
+            <div class="games-grid">
+                <!-- Hello Numbers Game -->
+                <div class="game-card">
+                    <h3>🌟 Hello Numbers Game</h3>
+                    <p>Practice greetings, numbers, polite expressions, and age-related vocabulary all in one game!</p>
+                    <p><strong>Skills:</strong> Listening, Reading, Grammar</p>
+                    <p><strong>Questions:</strong> 15 mixed topics</p>
+                    <div class="achievement">✅ Ready to Play</div>
+                    <div class="best-score" id="hello-numbers-best" style="display: none;">
+                        Your best: 0%
+                    </div>
+                    <button class="play-button" onclick="window.open('../games/hello-numbers-game.html', '_blank')">
+                        🎯 Play Now
+                    </button>
+                </div>
+
+                <!-- Coming Soon: Colors Game -->
+                <div class="game-card">
+                    <h3>🎨 Colors & Objects Match</h3>
+                    <p>Match classroom objects with their colors in this fun drag-and-drop game.</p>
+                    <p><strong>Skills:</strong> Vocabulary, Visual Recognition</p>
+                    <p><strong>Activity:</strong> Interactive matching</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
+                    </button>
+                </div>
+
+                <!-- Coming Soon: Family Tree -->
+                <div class="game-card">
+                    <h3>👨‍👩‍👧‍👦 Family Tree Builder</h3>
+                    <p>Create your family tree and practice family vocabulary with this interactive builder.</p>
+                    <p><strong>Skills:</strong> Speaking, Vocabulary, Grammar</p>
+                    <p><strong>Activity:</strong> Creative construction</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Month 1 Achievements -->
+        <section class="section">
+            <h2>🏆 Month 1 Achievements</h2>
+            <p>Earn these special badges by completing Month 1 activities!</p>
+            
+            <div style="margin-top: 2rem;">
+                <h3>🌟 Available Achievements</h3>
+                <div style="margin-top: 1rem;" id="month-achievements-list">
+                    <div class="achievement">🎯 Loading achievements...</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>🔒 Unlock These Next</h3>
+                <div style="margin-top: 1rem;">
+                    <div class="achievement locked">🎨 Color Master - Complete Colors lesson</div>
+                    <div class="achievement locked">👨‍👩‍👧‍👦 Family Expert - Complete Family lesson</div>
+                    <div class="achievement locked">📚 Month 1 Graduate - Complete all Month 1 lessons</div>
+                    <div class="achievement locked">⭐ Perfect Student - Score 100% on all Month 1 games</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="section">
+            <h2>🧭 What's Next?</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                
+                <div class="month-card" onclick="location.href='../index.html'">
+                    <h3>🏠 Back to Home</h3>
+                    <p>Return to the main dashboard</p>
+                    <div class="achievement">📊 View All Progress</div>
+                </div>
+
+                <div class="month-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <h3>📅 Month 2</h3>
+                    <p>Daily Life & Food</p>
+                    <div class="achievement locked">🔒 Complete Month 1 First</div>
+                </div>
+
+                <div class="month-card" onclick="downloadMonthProgress()">
+                    <h3>📄 Progress Report</h3>
+                    <p>Download Month 1 summary</p>
+                    <div class="achievement">📊 Teacher Report</div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <p>🌟 Month 1: Getting Started with English! 🌟</p>
+        <p>Keep practicing and you'll be amazing at English!</p>
+        <p style="margin-top: 1rem; color: #718096;">
+            Questions? Ask your teacher for help and encouragement.
+        </p>
+    </footer>
+
+    <script src="../js/student-tracker.js"></script>
+    <script>
+        // Month 1 specific functionality
+        class Month1Page {
+            constructor() {
+                this.month1Lessons = ['revision', 'hello', 'numbers', 'colors', 'family'];
+                this.month1Games = ['hello-numbers'];
+                this.initializePage();
+            }
+
+            initializePage() {
+                // Wait for student tracker to load
+                setTimeout(() => {
+                    this.updateStudentInfo();
+                    this.updateMonthProgress();
+                    this.updateGameScores();
+                    this.updateAchievements();
+                }, 100);
+            }
+
+            updateStudentInfo() {
+                if (window.studentTracker) {
+                    const studentName = window.studentTracker.getStudentName();
+                    if (studentName) {
+                        document.getElementById('student-name').textContent = studentName;
+                        document.getElementById('student-welcome').style.display = 'block';
+                        
+                        // Update page title
+                        document.getElementById('month-title').textContent = `🌟 Welcome back, ${studentName}! 🌟`;
+                        document.getElementById('month-subtitle').textContent = 'Continue your Month 1 English journey';
+                    }
+                }
+            }
+
+            updateMonthProgress() {
+                if (!window.studentTracker) return;
+
+                const stats = window.studentTracker.getStats();
+                const scores = window.studentTracker.getGameScores();
+                
+                // Calculate Month 1 specific stats
+                const month1GameScores = Object.keys(scores).filter(game => 
+                    this.month1Games.includes(game)
+                );
+                
+                const gamesPlayed = month1GameScores.length;
+                const bestScore = Math.max(0, ...month1GameScores.map(game => scores[game].bestScore));
+                const achievements = this.getMonth1Achievements();
+                
+                // Update stat cards
+                document.getElementById('month-lessons-completed').textContent = gamesPlayed;
+                document.getElementById('month-games-played').textContent = stats.gamesPlayed;
+                document.getElementById('month-best-score').textContent = bestScore + '%';
+                document.getElementById('month-achievements').textContent = achievements.length;
+                
+                // Update progress bar (out of 4 lessons total)
+                const progressPercentage = Math.round((gamesPlayed / this.month1Lessons.length) * 100);
+                document.getElementById('month-progress-bar').style.width = progressPercentage + '%';
+                document.getElementById('progress-percentage').textContent = progressPercentage;
+            }
+
+            updateGameScores() {
+                if (!window.studentTracker) return;
+
+                // Update Hello Numbers Game score
+                const helloNumbersScore = window.studentTracker.getBestScore('hello-numbers');
+                if (helloNumbersScore > 0) {
+                    const scoreElement = document.getElementById('hello-numbers-best');
+                    scoreElement.textContent = `Your best: ${helloNumbersScore}%`;
+                    scoreElement.style.display = 'block';
+
+                    // Update revision lesson status
+                    const revisionBest = document.getElementById('revision-best-score');
+                    revisionBest.textContent = `Best: ${helloNumbersScore}%`;
+                    revisionBest.style.display = 'block';
+                    
+                    document.getElementById('revision-status').textContent = '✅ Completed';
+                    document.getElementById('revision-status').className = 'achievement';
+                }
+            }
+
+            getMonth1Achievements() {
+                if (!window.studentTracker) return [];
+                
+                const allAchievements = window.studentTracker.getAchievements();
+                
+                // Filter achievements that are relevant to Month 1
+                const month1AchievementIds = ['welcome', 'first-game', 'good-score', 'perfect-score'];
+                
+                return Object.keys(allAchievements).filter(id => 
+                    month1AchievementIds.includes(id)
+                );
+            }
+
+            updateAchievements() {
+                if (!window.studentTracker) return;
+
+                const achievements = window.studentTracker.getAchievements();
+                const achievementsList = document.getElementById('month-achievements-list');
+                
+                // Clear loading message
+                achievementsList.innerHTML = '';
+                
+                // Add earned achievements
+                const earnedAchievements = Object.values(achievements);
+                if (earnedAchievements.length > 0) {
+                    earnedAchievements.forEach(achievement => {
+                        const badge = document.createElement('div');
+                        badge.className = 'achievement';
+                        badge.textContent = achievement.title;
+                        badge.title = achievement.description;
+                        achievementsList.appendChild(badge);
+                    });
+                } else {
+                    // No achievements yet
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'achievement locked';
+                    placeholder.textContent = '🎯 Play your first game to earn achievements!';
+                    achievementsList.appendChild(placeholder);
+                }
+            }
+        }
+
+        // Download Month 1 progress report
+        function downloadMonthProgress() {
+            if (window.studentTracker) {
+                // Create month-specific report
+                const studentName = window.studentTracker.getStudentName();
+                const scores = window.studentTracker.getGameScores();
+                const achievements = window.studentTracker.getAchievements();
+                const stats = window.studentTracker.getStats();
+                
+                const month1Report = {
+                    studentName: studentName,
+                    month: 1,
+                    title: "Month 1: Greetings & Numbers",
+                    generatedDate: new Date().toISOString(),
+                    summary: {
+                        lessonsCompleted: Object.keys(scores).length,
+                        gamesPlayed: stats.gamesPlayed,
+                        bestScore: Math.max(0, ...Object.values(scores).map(s => s.bestScore)),
+                        achievementsEarned: Object.keys(achievements).length
+                    },
+                    gameResults: scores,
+                    achievements: achievements,
+                    nextMonth: "Month 2: Daily Life & Food"
+                };
+                
+                // Download file
+                const dataStr = JSON.stringify(month1Report, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${studentName || 'Student'}-Month1-Report-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            new Month1Page();
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Create floating shapes periodically
+        function createFloatingShape() {
+            const shape = document.createElement('div');
+            shape.className = 'floating-shape';
+            shape.style.width = Math.random() * 60 + 20 + 'px';
+            shape.style.height = shape.style.width;
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.animationDuration = Math.random() * 20 + 15 + 's';
+            shape.style.animationDelay = Math.random() * 5 + 's';
+            
+            const shapesContainer = document.querySelector('.floating-shapes');
+            if (shapesContainer) {
+                shapesContainer.appendChild(shape);
+                
+                setTimeout(() => {
+                    if (shape.parentElement) {
+                        shape.remove();
+                    }
+                }, 25000);
+            }
+        }
+
+        setInterval(createFloatingShape, 3000);
+    </script>
+</body>
+</html>
