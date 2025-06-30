@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Numbers Game - ESL Practice</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/games.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <!-- Game Header Navigation -->
+    <div class="game-header">
+        <div class="game-nav">
+            <a href="../index.html" class="back-btn">
+                ← Back to Home
+            </a>
+            <div class="game-title">Hello Numbers Game</div>
+            <div class="best-score" id="display-best-score" style="display: none;">
+                Best: 0%
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Welcome Message -->
+    <div class="student-welcome" id="student-welcome" style="display: none;">
+        Good luck, <span id="student-name">Student</span>! 🚀
+    </div>
+
+    <div class="game-container">
+        <h1>🌟 Hello Numbers Game</h1>
+        <p class="game-subtitle">Practice your greetings and numbers!</p>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-number" id="current-score">0</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="question-number">1</div>
+                <div class="score-label">Question</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="total-questions">15</div>
+                <div class="score-label">Total</div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question" id="question-text">Loading...</div>
+            <div class="options" id="options-container"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="next-btn" style="display: none;">Next Question →</button>
+        </div>
+    </div>
+
+    <script src="../js/student-tracker.js"></script>
+    <script>
+        class HelloNumbersGame {
+            constructor() {
+                this.questions = [
+                    {
+                        type: 'greeting',
+                        question: 'What do you say when you meet someone for the first time?',
+                        image: 'images/meeting-new-person.png',
+                        options: ['Nice to meet you!', 'Good night!', 'See you later!', 'How old are you?'],
+                        correct: 0
+                    },
+                    {
+                        type: 'number',
+                        question: 'How do you write the number 7?',
+                        image: 'images/number-seven.png',
+                        options: ['seven', 'sevne', 'sevin', 'saven'],
+                        correct: 0
+                    },
+                    {
+                        type: 'greeting',
+                        question: 'Someone says "Hello!" to you. What do you say back?',
+                        image: 'images/person-saying-hello.png',
+                        options: ['Goodbye!', 'Hello!' , 'Thank you!', 'Please!'],
+                        correct: 1
+                    },
+                    {
+                        type: 'age',
+                        question: 'If someone is 12 years old, what do they say?',
+                        image: 'images/12-year-old-child.png',
+                        options: ['I have 12 years', 'I am 12 years old', 'My age is 12', 'I am 12 old years'],
+                        correct: 1
+                    },
+                    {
+                        type: 'number',
+                        question: 'What number comes after fifteen?',
+                        image: 'images/number-sequence-15-16.png',
+                        options: ['fourteen', 'sixteen', 'seventeen', 'fifty'],
+                        correct: 1
+                    },
+                    {
+                        type: 'greeting',
+                        question: 'What do you say when you leave?',
+                        image: 'images/person-waving-goodbye.png',
+                        options: ['Hello!', 'Please!', 'Goodbye!', 'Thank you!'],
+                        correct: 2
+                    },
+                    {
+                        type: 'number',
+                        question: 'How do you write 20?',
+                        image: 'images/number-twenty.png',
+                        options: ['twanty', 'twenty', 'twentie', 'twente'],
+                        correct: 1
+                    },
+                    {
+                        type: 'polite',
+                        question: 'When someone helps you, what do you say?',
+                        image: 'images/person-helping-another.png',
+                        options: ['Please!', 'Sorry!', 'Thank you!', 'Excuse me!'],
+                        correct: 2
+                    },
+                    {
+                        type: 'age',
+                        question: 'How do you ask someone their age?',
+                        image: 'images/asking-age-question.png',
+                        options: ['What age you have?', 'How old are you?', 'How many years?', 'What is your age number?'],
+                        correct: 1
+                    },
+                    {
+                        type: 'number',
+                        question: 'What is 11 + 4?',
+                        image: 'images/math-11-plus-4.png',
+                        options: ['fourteen', 'fifteen', 'sixteen', 'thirteen'],
+                        correct: 1
+                    },
+                    {
+                        type: 'greeting',
+                        question: 'What do you say in the morning?',
+                        image: 'images/morning-sunrise.png',
+                        options: ['Good night!', 'Good morning!', 'Good evening!', 'Good afternoon!'],
+                        correct: 1
+                    },
+                    {
+                        type: 'number',
+                        question: 'How do you write 13?',
+                        image: 'images/number-thirteen.png',
+                        options: ['thirteen', 'threeteen', 'thirten', 'thrteen'],
+                        correct: 0
+                    },
+                    {
+                        type: 'introduction',
+                        question: 'How do you tell someone your name?',
+                        image: 'images/person-introducing-name.png',
+                        options: ['I call me...', 'My name is...', 'I am called...', 'My name am...'],
+                        correct: 1
+                    },
+                    {
+                        type: 'number',
+                        question: 'What number is between 18 and 20?',
+                        image: 'images/numbers-18-19-20.png',
+                        options: ['seventeen', 'eighteen', 'nineteen', 'twenty'],
+                        correct: 2
+                    },
+                    {
+                        type: 'polite',
+                        question: 'When you want something, what do you say first?',
+                        image: 'images/child-asking-politely.png',
+                        options: ['Give me!', 'Please!', 'Now!', 'I want!'],
+                        correct: 1
+                    }
+                ];
+                
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.answered = false;
+                this.totalQuestions = this.questions.length;
+                this.startTime = Date.now();
+                
+                this.initializeGame();
+            }
+
+            initializeGame() {
+                this.shuffleQuestions();
+                this.showStudentInfo();
+                this.showQuestion();
+                document.getElementById('next-btn').addEventListener('click', () => this.nextQuestion());
+            }
+
+            showStudentInfo() {
+                // Show student name if available
+                if (window.studentTracker) {
+                    const studentName = window.studentTracker.getStudentName();
+                    if (studentName) {
+                        document.getElementById('student-name').textContent = studentName;
+                        document.getElementById('student-welcome').style.display = 'block';
+                    }
+
+                    // Show best score if available
+                    const bestScore = window.studentTracker.getBestScore('hello-numbers');
+                    if (bestScore > 0) {
+                        document.getElementById('display-best-score').textContent = `Best: ${bestScore}%`;
+                        document.getElementById('display-best-score').style.display = 'block';
+                    }
+                }
+            }
+
+            shuffleQuestions() {
+                for (let i = this.questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
+                }
+            }
+
+            showQuestion() {
+                if (this.currentQuestion >= this.totalQuestions) {
+                    this.showFinalScore();
+                    return;
+                }
+
+                const question = this.questions[this.currentQuestion];
+                document.getElementById('question-text').textContent = question.question;
+                document.getElementById('question-number').textContent = this.currentQuestion + 1;
+                document.getElementById('current-score').textContent = this.score;
+                
+                // Add image before question text
+                const questionContainer = document.querySelector('.question-container');
+                const existingImage = questionContainer.querySelector('.question-image');
+                if (existingImage) {
+                    existingImage.remove();
+                }
+                
+                const img = document.createElement('img');
+                img.src = question.image;
+                img.className = 'question-image';
+                img.alt = `Image for: ${question.question}`;
+                
+                const questionText = document.getElementById('question-text');
+                questionText.parentNode.insertBefore(img, questionText);
+                
+                const optionsContainer = document.getElementById('options-container');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'option';
+                    button.textContent = option;
+                    button.addEventListener('click', () => this.selectAnswer(index));
+                    optionsContainer.appendChild(button);
+                });
+
+                document.getElementById('feedback').textContent = '';
+                document.getElementById('next-btn').style.display = 'none';
+                this.answered = false;
+            }
+
+            selectAnswer(selectedIndex) {
+                if (this.answered) return;
+                
+                this.answered = true;
+                const question = this.questions[this.currentQuestion];
+                const options = document.querySelectorAll('.option');
+                const feedback = document.getElementById('feedback');
+                
+                options[selectedIndex].classList.add(selectedIndex === question.correct ? 'correct' : 'incorrect');
+                
+                if (selectedIndex === question.correct) {
+                    this.score++;
+                    feedback.textContent = '🎉 Excellent! That\'s correct!';
+                    feedback.className = 'feedback correct';
+                } else {
+                    options[question.correct].classList.add('correct');
+                    feedback.textContent = `❌ Not quite! The correct answer is: "${question.options[question.correct]}"`;
+                    feedback.className = 'feedback incorrect';
+                }
+                
+                document.getElementById('current-score').textContent = this.score;
+                document.getElementById('next-btn').style.display = 'block';
+                
+                // Disable all options
+                options.forEach(option => option.style.pointerEvents = 'none');
+            }
+
+            nextQuestion() {
+                this.currentQuestion++;
+                this.showQuestion();
+            }
+
+            showFinalScore() {
+                const percentage = Math.round((this.score / this.totalQuestions) * 100);
+                const timeSpent = Math.round((Date.now() - this.startTime) / 1000 / 60 * 10) / 10; // minutes
+                
+                let celebration = '';
+                let message = '';
+                
+                if (percentage >= 90) {
+                    celebration = '🏆🎉🌟';
+                    message = 'AMAZING! You\'re an English superstar!';
+                } else if (percentage >= 80) {
+                    celebration = '🎉⭐';
+                    message = 'EXCELLENT work! You\'re doing great!';
+                } else if (percentage >= 70) {
+                    celebration = '👏😊';
+                    message = 'GOOD job! Keep practicing!';
+                } else {
+                    celebration = '💪📚';
+                    message = 'Keep trying! Practice makes perfect!';
+                }
+
+                // Save score to student tracker
+                if (window.studentTracker) {
+                    window.studentTracker.saveGameScore('hello-numbers', percentage, timeSpent);
+                }
+
+                const container = document.querySelector('.question-container');
+                container.innerHTML = `
+                    <div class="final-score">
+                        <div class="celebration">${celebration}</div>
+                        <h2>${message}</h2>
+                        <p style="font-size: 1.5em; margin: 20px 0;">
+                            You got <strong>${this.score}</strong> out of <strong>${this.totalQuestions}</strong> correct!
+                        </p>
+                        <p style="font-size: 1.3em; margin: 10px 0;">
+                            That's <strong>${percentage}%</strong>!
+                        </p>
+                        <p style="margin: 10px 0;">
+                            Time: <strong>${timeSpent} minutes</strong>
+                        </p>
+                        <button class="restart-btn" onclick="location.reload()">
+                            🔄 Play Again
+                        </button>
+                        <br>
+                        <a href="../index.html" class="cta-button" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // Wait for student tracker to load, then start game
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay to ensure student tracker is ready
+            setTimeout(() => {
+                new HelloNumbersGame();
+            }, 100);
+        });
+
+        // Create floating shapes periodically (from main.css)
+        function createFloatingShape() {
+            const shape = document.createElement('div');
+            shape.className = 'floating-shape';
+            shape.style.width = Math.random() * 60 + 20 + 'px';
+            shape.style.height = shape.style.width;
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.animationDuration = Math.random() * 20 + 15 + 's';
+            shape.style.animationDelay = Math.random() * 5 + 's';
+            
+            const shapesContainer = document.querySelector('.floating-shapes');
+            if (shapesContainer) {
+                shapesContainer.appendChild(shape);
+                
+                setTimeout(() => {
+                    if (shape.parentElement) {
+                        shape.remove();
+                    }
+                }, 25000);
+            }
+        }
+
+        setInterval(createFloatingShape, 3000);
+    </script>
+</body>
+</html>
