@@ -380,6 +380,11 @@
             margin: 0.2rem;
         }
 
+        .achievement.locked {
+            background: #cbd5e0;
+            color: #4a5568;
+        }
+
         /* Loading Animation */
         .loading {
             display: inline-block;
@@ -394,6 +399,18 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        /* Best Score Display */
+        .best-score {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #744210;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            display: inline-block;
         }
     </style>
 </head>
@@ -418,8 +435,8 @@
     </header>
 
     <section class="hero">
-        <h1>🌟 Learn English with Fun Games! 🌟</h1>
-        <p>Interactive ESL games designed for young learners aged 10-14</p>
+        <h1 id="hero-title">🌟 Learn English with Fun Games! 🌟</h1>
+        <p id="hero-subtitle">Interactive ESL games designed for young learners aged 10-14</p>
         <a href="#games" class="cta-button">🚀 Start Playing Now!</a>
     </section>
 
@@ -437,22 +454,22 @@
                 <div class="month-card" style="opacity: 0.7; cursor: not-allowed;">
                     <h3>Month 2</h3>
                     <p>Daily Life & Food</p>
-                    <div class="achievement">🔒 Locked</div>
+                    <div class="achievement locked">🔒 Locked</div>
                 </div>
                 <div class="month-card" style="opacity: 0.7; cursor: not-allowed;">
                     <h3>Month 3</h3>
                     <p>Actions & Routines</p>
-                    <div class="achievement">🔒 Locked</div>
+                    <div class="achievement locked">🔒 Locked</div>
                 </div>
                 <div class="month-card" style="opacity: 0.7; cursor: not-allowed;">
                     <h3>Month 4</h3>
                     <p>Communication</p>
-                    <div class="achievement">🔒 Locked</div>
+                    <div class="achievement locked">🔒 Locked</div>
                 </div>
                 <div class="month-card" style="opacity: 0.7; cursor: not-allowed;">
                     <h3>Month 5</h3>
                     <p>Future Plans</p>
-                    <div class="achievement">🔒 Locked</div>
+                    <div class="achievement locked">🔒 Locked</div>
                 </div>
             </div>
         </section>
@@ -466,7 +483,8 @@
                     <h3>🌟 Hello Numbers Game</h3>
                     <p>Practice greetings, numbers, and polite expressions from Lesson 1</p>
                     <div class="achievement">✅ Ready to Play</div>
-                    <button class="play-button" onclick="window.open('month-one/hello-numbers-game.html', '_blank')">
+                    <div class="best-score" id="hello-numbers-score" style="display: none;">Best: 0%</div>
+                    <button class="play-button" onclick="window.open('games/hello-numbers-game.html', '_blank')">
                         🎯 Play Now
                     </button>
                 </div>
@@ -474,7 +492,7 @@
                 <div class="game-card">
                     <h3>🎨 Colors & Objects</h3>
                     <p>Learn classroom objects and colors through interactive activities</p>
-                    <div class="achievement">🔒 Coming Soon</div>
+                    <div class="achievement locked">🔒 Coming Soon</div>
                     <button class="play-button" disabled>
                         <span class="loading"></span> In Development
                     </button>
@@ -483,7 +501,7 @@
                 <div class="game-card">
                     <h3>👨‍👩‍👧‍👦 Family Tree Builder</h3>
                     <p>Create family trees and practice family vocabulary</p>
-                    <div class="achievement">🔒 Coming Soon</div>
+                    <div class="achievement locked">🔒 Coming Soon</div>
                     <button class="play-button" disabled>
                         <span class="loading"></span> In Development
                     </button>
@@ -492,7 +510,7 @@
                 <div class="game-card">
                     <h3>🍕 Food Preferences</h3>
                     <p>Express likes and dislikes about different foods</p>
-                    <div class="achievement">🔒 Coming Soon</div>
+                    <div class="achievement locked">🔒 Coming Soon</div>
                     <button class="play-button" disabled>
                         <span class="loading"></span> In Development
                     </button>
@@ -501,7 +519,7 @@
                 <div class="game-card">
                     <h3>🐾 Animal Safari</h3>
                     <p>Explore animals and practice descriptive vocabulary</p>
-                    <div class="achievement">🔒 Coming Soon</div>
+                    <div class="achievement locked">🔒 Coming Soon</div>
                     <button class="play-button" disabled>
                         <span class="loading"></span> In Development
                     </button>
@@ -510,7 +528,7 @@
                 <div class="game-card">
                     <h3>🏠 Virtual House Tour</h3>
                     <p>Navigate through rooms and learn household vocabulary</p>
-                    <div class="achievement">🔒 Coming Soon</div>
+                    <div class="achievement locked">🔒 Coming Soon</div>
                     <button class="play-button" disabled>
                         <span class="loading"></span> In Development
                     </button>
@@ -522,31 +540,30 @@
             <h2>📊 Your Progress</h2>
             <p>Track your English learning journey and celebrate your achievements!</p>
             
+            <!-- FIXED: Added proper IDs that match student-tracker.js -->
             <div class="stats-dashboard">
                 <div class="stat-card">
-                    <span class="stat-number">1</span>
+                    <span class="stat-number" id="games-completed">0</span>
                     <span class="stat-label">Games Completed</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">0</span>
+                    <span class="stat-number" id="perfect-scores">0</span>
                     <span class="stat-label">Perfect Scores</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">5</span>
-                    <span class="stat-label">Lessons Ahead</span>
+                    <span class="stat-number" id="achievements-earned">0</span>
+                    <span class="stat-label">Achievements</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">20%</span>
-                    <span class="stat-label">Course Progress</span>
+                    <span class="stat-number" id="learning-days">0</span>
+                    <span class="stat-label">Learning Days</span>
                 </div>
             </div>
 
             <div style="margin-top: 2rem;">
-                <h3>🏆 Recent Achievements</h3>
-                <div style="margin-top: 1rem;">
-                    <div class="achievement">🎯 First Game Played</div>
-                    <div class="achievement">📚 Course Started</div>
-                    <div class="achievement">💪 Ready to Learn</div>
+                <h3>🏆 Your Achievements</h3>
+                <div style="margin-top: 1rem;" id="achievements-list">
+                    <div class="achievement locked">🎯 Play your first game to start earning achievements!</div>
                 </div>
             </div>
         </section>
@@ -561,6 +578,447 @@
     </footer>
 
     <script>
+        /**
+         * ESL Games Hub - Simple Student Tracker
+         * Handles student name, game scores, and basic achievements
+         * Uses localStorage - no external services needed
+         */
+
+        class StudentTracker {
+            
+            constructor() {
+                this.storageKeys = {
+                    student: 'esl-student-name',
+                    scores: 'esl-game-scores', 
+                    achievements: 'esl-achievements',
+                    stats: 'esl-stats'
+                };
+                this.initializeStudent();
+            }
+
+            // Initialize student on first visit
+            initializeStudent() {
+                if (!this.getStudentName()) {
+                    this.showWelcomeModal();
+                } else {
+                    this.updateDisplays();
+                }
+            }
+
+            // Show welcome modal for new students
+            showWelcomeModal() {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                `;
+                modal.innerHTML = `
+                    <div style="
+                        background: white;
+                        padding: 2rem;
+                        border-radius: 20px;
+                        text-align: center;
+                        max-width: 400px;
+                        width: 90%;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    ">
+                        <h2 style="color: #667eea; margin-bottom: 1rem;">🌟 Welcome to ESL Games Hub! 🌟</h2>
+                        <p style="margin-bottom: 1rem;">What's your name?</p>
+                        <input type="text" id="student-name-input" placeholder="Enter your name..." maxlength="20" style="
+                            width: 100%;
+                            padding: 1rem;
+                            border: 2px solid #e2e8f0;
+                            border-radius: 10px;
+                            font-size: 1.1rem;
+                            margin: 1rem 0;
+                            font-family: inherit;
+                        ">
+                        <br>
+                        <button onclick="window.studentTracker.saveStudentName()" style="
+                            background: linear-gradient(135deg, #f093fb, #f5576c);
+                            color: white;
+                            padding: 1rem 2rem;
+                            border-radius: 50px;
+                            text-decoration: none;
+                            font-weight: bold;
+                            font-size: 1.1rem;
+                            border: none;
+                            cursor: pointer;
+                        ">
+                            🚀 Start Learning!
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Focus on input
+                setTimeout(() => {
+                    document.getElementById('student-name-input').focus();
+                }, 100);
+
+                // Allow Enter key to submit
+                document.getElementById('student-name-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.saveStudentName();
+                    }
+                });
+            }
+
+            // Save student name and close modal
+            saveStudentName() {
+                const nameInput = document.getElementById('student-name-input');
+                const name = nameInput.value.trim();
+                
+                if (name.length < 2) {
+                    alert('Please enter your name (at least 2 letters)');
+                    return;
+                }
+
+                // Save name
+                localStorage.setItem(this.storageKeys.student, name);
+                
+                // Award welcome achievement
+                this.addAchievement('welcome', 'Welcome! 🎉', 'Started your English learning journey');
+                
+                // Initialize stats
+                this.initializeStats();
+                
+                // Close modal
+                document.querySelector('.modal').remove();
+                
+                // Update displays
+                this.updateDisplays();
+            }
+
+            // Get student name
+            getStudentName() {
+                return localStorage.getItem(this.storageKeys.student);
+            }
+
+            // Initialize stats for new student
+            initializeStats() {
+                const stats = {
+                    gamesPlayed: 0,
+                    totalScore: 0,
+                    perfectScores: 0,
+                    firstPlayDate: new Date().toISOString(),
+                    lastPlayDate: new Date().toISOString(),
+                    playDays: [new Date().toDateString()]
+                };
+                localStorage.setItem(this.storageKeys.stats, JSON.stringify(stats));
+            }
+
+            // Save game score
+            saveGameScore(gameId, score, timeSpent = 0) {
+                const scores = this.getGameScores();
+                const currentDate = new Date().toDateString();
+                
+                // Initialize game data if first time
+                if (!scores[gameId]) {
+                    scores[gameId] = {
+                        attempts: 0,
+                        bestScore: 0,
+                        totalScore: 0,
+                        firstPlay: currentDate,
+                        lastPlay: currentDate
+                    };
+                }
+
+                // Update game scores
+                scores[gameId].attempts++;
+                scores[gameId].totalScore += score;
+                scores[gameId].lastPlay = currentDate;
+                
+                // Update best score if better
+                if (score > scores[gameId].bestScore) {
+                    scores[gameId].bestScore = score;
+                }
+
+                // Save updated scores
+                localStorage.setItem(this.storageKeys.scores, JSON.stringify(scores));
+
+                // Update general stats
+                this.updateStats(score, currentDate);
+
+                // Check for achievements
+                this.checkAchievements(gameId, score);
+
+                // Update displays
+                this.updateDisplays();
+
+                console.log(`Score saved: ${gameId} = ${score}%`);
+            }
+
+            // Get all game scores
+            getGameScores() {
+                const scores = localStorage.getItem(this.storageKeys.scores);
+                return scores ? JSON.parse(scores) : {};
+            }
+
+            // Get best score for specific game
+            getBestScore(gameId) {
+                const scores = this.getGameScores();
+                return scores[gameId] ? scores[gameId].bestScore : 0;
+            }
+
+            // Update general statistics
+            updateStats(score, currentDate) {
+                let stats = JSON.parse(localStorage.getItem(this.storageKeys.stats) || '{}');
+                
+                // Initialize if missing
+                if (!stats.gamesPlayed) {
+                    stats = {
+                        gamesPlayed: 0,
+                        totalScore: 0,
+                        perfectScores: 0,
+                        firstPlayDate: new Date().toISOString(),
+                        lastPlayDate: new Date().toISOString(),
+                        playDays: []
+                    };
+                }
+
+                // Update stats
+                stats.gamesPlayed++;
+                stats.totalScore += score;
+                stats.lastPlayDate = new Date().toISOString();
+                
+                if (score >= 100) {
+                    stats.perfectScores++;
+                }
+
+                // Track unique play days
+                if (!stats.playDays.includes(currentDate)) {
+                    stats.playDays.push(currentDate);
+                }
+
+                localStorage.setItem(this.storageKeys.stats, JSON.stringify(stats));
+            }
+
+            // Get general statistics
+            getStats() {
+                const stats = localStorage.getItem(this.storageKeys.stats);
+                return stats ? JSON.parse(stats) : {
+                    gamesPlayed: 0,
+                    totalScore: 0,
+                    perfectScores: 0,
+                    playDays: []
+                };
+            }
+
+            // Add achievement
+            addAchievement(id, title, description) {
+                const achievements = this.getAchievements();
+                
+                if (!achievements[id]) {
+                    achievements[id] = {
+                        title: title,
+                        description: description,
+                        earned: true,
+                        date: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem(this.storageKeys.achievements, JSON.stringify(achievements));
+                    
+                    // Show achievement notification
+                    this.showAchievementNotification(title, description);
+                    
+                    console.log(`Achievement unlocked: ${title}`);
+                }
+            }
+
+            // Get all achievements
+            getAchievements() {
+                const achievements = localStorage.getItem(this.storageKeys.achievements);
+                return achievements ? JSON.parse(achievements) : {};
+            }
+
+            // Check for new achievements after game
+            checkAchievements(gameId, score) {
+                const stats = this.getStats();
+                const scores = this.getGameScores();
+                
+                // First game achievement
+                if (stats.gamesPlayed === 1) {
+                    this.addAchievement('first-game', 'First Game! 🎮', 'Played your first English game');
+                }
+                
+                // Good score achievement
+                if (score >= 70 && !this.getAchievements()['good-score']) {
+                    this.addAchievement('good-score', 'Good Score! ⭐', 'Scored 70% or higher on a game');
+                }
+                
+                // Perfect score achievement
+                if (score >= 100) {
+                    this.addAchievement('perfect-score', 'Perfect Score! 🏆', 'Got 100% on a game');
+                }
+                
+                // Multiple days achievement
+                if (stats.playDays.length >= 3) {
+                    this.addAchievement('learning-streak', 'Learning Streak! 📚', 'Played games on 3 different days');
+                }
+                
+                // 5 games achievement
+                if (stats.gamesPlayed >= 5) {
+                    this.addAchievement('game-master', 'Game Master! 🌟', 'Completed 5 games');
+                }
+            }
+
+            // Show achievement notification popup
+            showAchievementNotification(title, description) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                `;
+                notification.innerHTML = `
+                    <div style="
+                        background: linear-gradient(135deg, #ffd700, #ffed4e);
+                        color: #744210;
+                        padding: 2rem;
+                        border-radius: 20px;
+                        text-align: center;
+                        max-width: 400px;
+                        width: 90%;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    ">
+                        <h2 style="color: #744210;">🎉 Achievement Unlocked! 🎉</h2>
+                        <h3>${title}</h3>
+                        <p>${description}</p>
+                        <button onclick="this.closest('div').parentElement.remove()" style="
+                            background: linear-gradient(135deg, #f093fb, #f5576c);
+                            color: white;
+                            padding: 1rem 2rem;
+                            border-radius: 50px;
+                            font-weight: bold;
+                            font-size: 1.1rem;
+                            border: none;
+                            cursor: pointer;
+                            margin-top: 1rem;
+                        ">
+                            Awesome! 🚀
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
+
+            // Update all displays on page
+            updateDisplays() {
+                this.updateWelcomeMessage();
+                this.updateHomepageStats();
+                this.updateAchievementsList();
+                this.updateGameCards();
+            }
+
+            // Update welcome message with student name
+            updateWelcomeMessage() {
+                const name = this.getStudentName();
+                if (name) {
+                    // Update hero section
+                    const heroH1 = document.getElementById('hero-title');
+                    if (heroH1) {
+                        heroH1.textContent = `🌟 Hello, ${name}! Ready to learn English? 🌟`;
+                    }
+                    
+                    // Update hero subtitle
+                    const heroP = document.getElementById('hero-subtitle');
+                    if (heroP) {
+                        heroP.textContent = `Let's practice English with fun games, ${name}!`;
+                    }
+                }
+            }
+
+            // FIXED: Update homepage statistics with correct IDs
+            updateHomepageStats() {
+                const stats = this.getStats();
+                const achievements = Object.keys(this.getAchievements()).length;
+                
+                // Update stat numbers with correct IDs
+                const statElements = {
+                    'games-completed': stats.gamesPlayed,
+                    'perfect-scores': stats.perfectScores,
+                    'achievements-earned': achievements,
+                    'learning-days': stats.playDays.length
+                };
+                
+                Object.entries(statElements).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = value;
+                    }
+                });
+            }
+
+            // FIXED: Update achievements list on homepage
+            updateAchievementsList() {
+                const achievementsContainer = document.getElementById('achievements-list');
+                if (achievementsContainer) {
+                    const achievements = this.getAchievements();
+                    const achievementsList = Object.values(achievements);
+                    
+                    // Clear existing content
+                    achievementsContainer.innerHTML = '';
+                    
+                    if (achievementsList.length > 0) {
+                        // Add earned achievements
+                        achievementsList.forEach(achievement => {
+                            const badge = document.createElement('div');
+                            badge.className = 'achievement';
+                            badge.textContent = achievement.title;
+                            badge.title = achievement.description;
+                            achievementsContainer.appendChild(badge);
+                        });
+                    } else {
+                        // No achievements yet
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'achievement locked';
+                        placeholder.textContent = '🎯 Play your first game to start earning achievements!';
+                        achievementsContainer.appendChild(placeholder);
+                    }
+                }
+            }
+
+            // Update game cards with best scores
+            updateGameCards() {
+                // Update Hello Numbers Game score
+                const helloNumbersScore = this.getBestScore('hello-numbers');
+                const scoreElement = document.getElementById('hello-numbers-score');
+                if (scoreElement && helloNumbersScore > 0) {
+                    scoreElement.textContent = `Best: ${helloNumbersScore}%`;
+                    scoreElement.style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            window.studentTracker = new StudentTracker();
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -601,6 +1059,13 @@
                 this.style.transform = 'scale(1) rotateY(0deg)';
             });
         });
+
+        // Global function for games to report scores
+        function reportGameScore(gameId, score, timeSpent = 0) {
+            if (window.studentTracker) {
+                window.studentTracker.saveGameScore(gameId, score, timeSpent);
+            }
+        }
     </script>
 </body>
 </html>
