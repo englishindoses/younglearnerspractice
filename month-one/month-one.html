@@ -20,9 +20,9 @@
             <div class="logo">🎮 ESL Games Hub</div>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="#lessons">Lessons</a></li>
                 <li><a href="#progress">Progress</a></li>
                 <li><a href="#games">Games</a></li>
+                <li><a href="#achievements">Achievements</a></li>
             </ul>
         </nav>
     </header>
@@ -37,15 +37,11 @@
 
     <main>
         <!-- Month Progress Overview -->
-        <section class="section">
+        <section class="section" id="progress">
             <h2>📊 Your Month 1 Progress</h2>
             <p>Track your progress through the first month of English learning!</p>
             
             <div class="stats-dashboard">
-                <div class="stat-card">
-                    <span class="stat-number" id="month-lessons-completed">0</span>
-                    <span class="stat-label">Lessons Completed</span>
-                </div>
                 <div class="stat-card">
                     <span class="stat-number" id="month-games-played">0</span>
                     <span class="stat-label">Games Played</span>
@@ -72,72 +68,6 @@
             </div>
         </section>
 
-        <!-- Lessons Section -->
-        <section class="section" id="lessons">
-            <h2>📚 Month 1 Lessons</h2>
-            <p>Master the basics of English communication with these fun lessons!</p>
-            
-            <div class="games-grid">
-                <!-- Lesson 1: Revision Lesson -->
-                <div class="game-card lesson-card" data-lesson="revision">
-                    <h3>🔄 Revision Lesson</h3>
-                    <p><strong>Topics:</strong> Greetings & Numbers Review</p>
-                    <p>Perfect for students returning after a break - combines basic greetings and numbers 1-20.</p>
-                    <div class="achievement" id="revision-status">📋 Available</div>
-                    <div class="best-score" id="revision-best-score" style="display: none;">
-                        Best: 0%
-                    </div>
-                    <button class="play-button" onclick="window.open('hello-numbers-game.html', '_blank')">
-                        🎯 Practice Now
-                    </button>
-                </div>
-
-                <!-- Lesson 1: Original Hello Lesson -->
-                <div class="game-card lesson-card" data-lesson="hello">
-                    <h3>👋 Lesson 1: Hello! Nice to Meet You</h3>
-                    <p><strong>Topics:</strong> Greetings, courtesy words</p>
-                    <p>Learn essential greetings and polite expressions for daily conversations.</p>
-                    <div class="achievement">✅ Content Ready</div>
-                    <button class="play-button" disabled>
-                        <span class="loading"></span> Interactive Game Coming Soon
-                    </button>
-                </div>
-
-                <!-- Lesson 2: Numbers & Ages -->
-                <div class="game-card lesson-card" data-lesson="numbers">
-                    <h3>🔢 Lesson 2: Numbers & Ages</h3>
-                    <p><strong>Topics:</strong> Numbers 1-20, age expressions</p>
-                    <p>Master counting and expressing ages in English with fun activities.</p>
-                    <div class="achievement">✅ Content Ready</div>
-                    <button class="play-button" disabled>
-                        <span class="loading"></span> Number Game In Development
-                    </button>
-                </div>
-
-                <!-- Lesson 3: Colors & Objects -->
-                <div class="game-card lesson-card" data-lesson="colors">
-                    <h3>🎨 Lesson 3: Colors & Classroom Objects</h3>
-                    <p><strong>Topics:</strong> Basic colors, school supplies</p>
-                    <p>Identify and describe objects using colors and classroom vocabulary.</p>
-                    <div class="achievement">🔒 Coming Soon</div>
-                    <button class="play-button" disabled>
-                        <span class="loading"></span> Color Game In Development
-                    </button>
-                </div>
-
-                <!-- Lesson 4: Family Members -->
-                <div class="game-card lesson-card" data-lesson="family">
-                    <h3>👨‍👩‍👧‍👦 Lesson 4: Family Members</h3>
-                    <p><strong>Topics:</strong> Family vocabulary, possessive 's</p>
-                    <p>Talk about your family and learn relationship words.</p>
-                    <div class="achievement">🔒 Coming Soon</div>
-                    <button class="play-button" disabled>
-                        <span class="loading"></span> Family Game In Development
-                    </button>
-                </div>
-            </div>
-        </section>
-
         <!-- Available Games Section -->
         <section class="section" id="games">
             <h2>🎮 Month 1 Games</h2>
@@ -154,7 +84,7 @@
                     <div class="best-score" id="hello-numbers-best" style="display: none;">
                         Your best: 0%
                     </div>
-                    <button class="play-button" onclick="window.open('hello-numbers-game.html', '_blank')">
+                    <button class="play-button" onclick="window.open('../games/hello-numbers-game.html', '_blank')">
                         🎯 Play Now
                     </button>
                 </div>
@@ -182,11 +112,47 @@
                         <span class="loading"></span> In Development
                     </button>
                 </div>
+
+                <!-- Coming Soon: Number Practice -->
+                <div class="game-card">
+                    <h3>🔢 Number Master</h3>
+                    <p>Advanced number practice with math problems and number spelling challenges.</p>
+                    <p><strong>Skills:</strong> Numbers, Math, Spelling</p>
+                    <p><strong>Activity:</strong> Mixed number exercises</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
+                    </button>
+                </div>
+
+                <!-- Coming Soon: Greeting Scenarios -->
+                <div class="game-card">
+                    <h3>👋 Greeting Master</h3>
+                    <p>Practice different greeting scenarios for various times of day and situations.</p>
+                    <p><strong>Skills:</strong> Social English, Context</p>
+                    <p><strong>Activity:</strong> Scenario practice</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
+                    </button>
+                </div>
+
+                <!-- Coming Soon: Politeness Practice -->
+                <div class="game-card">
+                    <h3>🙏 Politeness Pro</h3>
+                    <p>Learn when and how to use "please," "thank you," and other polite expressions.</p>
+                    <p><strong>Skills:</strong> Social Skills, Manners</p>
+                    <p><strong>Activity:</strong> Situational practice</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- Month 1 Achievements -->
-        <section class="section">
+        <section class="section" id="achievements">
             <h2>🏆 Month 1 Achievements</h2>
             <p>Earn these special badges by completing Month 1 activities!</p>
             
@@ -200,9 +166,9 @@
             <div style="margin-top: 2rem;">
                 <h3>🔒 Unlock These Next</h3>
                 <div style="margin-top: 1rem;">
-                    <div class="achievement locked">🎨 Color Master - Complete Colors lesson</div>
-                    <div class="achievement locked">👨‍👩‍👧‍👦 Family Expert - Complete Family lesson</div>
-                    <div class="achievement locked">📚 Month 1 Graduate - Complete all Month 1 lessons</div>
+                    <div class="achievement locked">🎨 Color Master - Complete Colors game</div>
+                    <div class="achievement locked">👨‍👩‍👧‍👦 Family Expert - Complete Family game</div>
+                    <div class="achievement locked">📚 Month 1 Graduate - Complete all Month 1 games</div>
                     <div class="achievement locked">⭐ Perfect Student - Score 100% on all Month 1 games</div>
                 </div>
             </div>
@@ -221,7 +187,7 @@
 
                 <div class="month-card" style="opacity: 0.6; cursor: not-allowed;">
                     <h3>📅 Month 2</h3>
-                    <p>Daily Life & Food</p>
+                    <p>Daily Life & Food Games</p>
                     <div class="achievement locked">🔒 Complete Month 1 First</div>
                 </div>
 
@@ -248,7 +214,6 @@
         // Month 1 specific functionality
         class Month1Page {
             constructor() {
-                this.month1Lessons = ['revision', 'hello', 'numbers', 'colors', 'family'];
                 this.month1Games = ['hello-numbers'];
                 this.initializePage();
             }
@@ -292,14 +257,15 @@
                 const bestScore = Math.max(0, ...month1GameScores.map(game => scores[game].bestScore));
                 const achievements = this.getMonth1Achievements();
                 
-                // Update stat cards
-                document.getElementById('month-lessons-completed').textContent = gamesPlayed;
+                // Update stat cards (removed lessons completed)
                 document.getElementById('month-games-played').textContent = stats.gamesPlayed;
                 document.getElementById('month-best-score').textContent = bestScore + '%';
                 document.getElementById('month-achievements').textContent = achievements.length;
                 
-                // Update progress bar (out of 4 lessons total)
-                const progressPercentage = Math.round((gamesPlayed / this.month1Lessons.length) * 100);
+                // Update progress bar (based on games available, not lessons)
+                const totalGames = 6; // Total planned games for Month 1
+                const completedGames = gamesPlayed;
+                const progressPercentage = Math.round((completedGames / totalGames) * 100);
                 document.getElementById('month-progress-bar').style.width = progressPercentage + '%';
                 document.getElementById('progress-percentage').textContent = progressPercentage;
             }
@@ -313,14 +279,6 @@
                     const scoreElement = document.getElementById('hello-numbers-best');
                     scoreElement.textContent = `Your best: ${helloNumbersScore}%`;
                     scoreElement.style.display = 'block';
-
-                    // Update revision lesson status
-                    const revisionBest = document.getElementById('revision-best-score');
-                    revisionBest.textContent = `Best: ${helloNumbersScore}%`;
-                    revisionBest.style.display = 'block';
-                    
-                    document.getElementById('revision-status').textContent = '✅ Completed';
-                    document.getElementById('revision-status').className = 'achievement';
                 }
             }
 
@@ -381,7 +339,7 @@
                     title: "Month 1: Greetings & Numbers",
                     generatedDate: new Date().toISOString(),
                     summary: {
-                        lessonsCompleted: Object.keys(scores).length,
+                        gamesCompleted: Object.keys(scores).length,
                         gamesPlayed: stats.gamesPlayed,
                         bestScore: Math.max(0, ...Object.values(scores).map(s => s.bestScore)),
                         achievementsEarned: Object.keys(achievements).length
