@@ -68,28 +68,28 @@
                     // Greeting Scenarios
                     {
                         type: 'greeting',
-                        question: 'What do you say?',
+                        question: 'What do you say when you meet someone in the morning?',
                         image: '../images/morning.png',
                         options: ['Good morning!', 'Hello!', 'Goodbye!', 'Good night!'],
                         correct: 0
                     },
                     {
                         type: 'greeting',
-                        question: 'What do you say?',
+                        question: 'What do you say when you meet someone new?',
                         image: '../images/shaking-hands.png',
                         options: ['Good morning!', 'Nice to meet you!', 'Goodbye!', 'Thank you!'],
                         correct: 1
                     },
                     {
                         type: 'greeting',
-                        question: 'What do you say?',
+                        question: 'What do you say when leaving?',
                         image: '../images/goodbye.png',
                         options: ['Hello!', 'Good morning!', 'Goodbye!', 'Please!'],
                         correct: 2
                     },
                     {
                         type: 'greeting',
-                        question: 'What do you say?',
+                        question: 'What do you say before going to bed?',
                         image: '../images/goodnight.png',
                         options: ['Good morning!', 'Hello!', 'Goodbye!', 'Good night!'],
                         correct: 3
@@ -97,7 +97,7 @@
                     // Math/Counting Questions
                     {
                         type: 'math',
-                        question: 'How many apples?',
+                        question: 'How many apples are there?',
                         image: '../images/eight-apples.png',
                         options: ['six', 'seven', 'eight', 'nine'],
                         correct: 2
@@ -126,28 +126,28 @@
                     // Polite Expressions
                     {
                         type: 'polite',
-                        question: 'What do you say?',
+                        question: 'What do you say when someone helps you?',
                         image: '../images/thank-you.png',
                         options: ['Please!', 'Sorry!', 'Thank you!', 'Hello!'],
                         correct: 2
                     },
                     {
                         type: 'polite',
-                        question: 'What do you say?',
+                        question: 'What do you say when asking for something?',
                         image: '../images/cookies-please.png',
                         options: ['Give me!', 'Please!', 'Thank you!', 'Sorry!'],
                         correct: 1
                     },
                     {
                         type: 'polite',
-                        question: 'What do you say?',
+                        question: 'What do you say when you make a mistake?',
                         image: '../images/bump-into-someone.png',
                         options: ['Please!', 'Sorry!', 'Thank you!', 'Hello!'],
                         correct: 1
                     },
                     {
                         type: 'polite',
-                        question: 'What do you say?',
+                        question: 'What do you say when your teacher helps you?',
                         image: '../images/teacher-help-student.png',
                         options: ['Please!', 'Sorry!', 'Thank you!', 'Goodbye!'],
                         correct: 2
@@ -155,14 +155,14 @@
                     // Age/Birthday Scenarios
                     {
                         type: 'age',
-                        question: 'How old is she?',
+                        question: 'How old is she? (Count the candles)',
                         image: '../images/cake-twelve.png',
                         options: ['eleven years old', 'twelve years old', 'thirteen years old', 'ten years old'],
                         correct: 1
                     },
                     {
                         type: 'age',
-                        question: 'How do you ask?',
+                        question: 'How do you ask someone their age?',
                         image: '../images/cake-question.png',
                         options: ['What age you have?', 'How old are you?', 'How many years?', 'What is your age?'],
                         correct: 1
@@ -170,7 +170,7 @@
                     // Number Recognition
                     {
                         type: 'number',
-                        question: 'What number comes next?',
+                        question: 'What number comes after 19?',
                         image: '../images/missing-twenty.png',
                         options: ['seventeen', 'twenty', 'nineteen', 'eighteen'],
                         correct: 1
@@ -227,16 +227,39 @@
                 document.getElementById('question-number').textContent = this.currentQuestion + 1;
                 document.getElementById('current-score').textContent = this.score;
                 
-                // Add image placeholder before question text
+                // ✅ FIXED: Add image before question text
                 const questionContainer = document.querySelector('.question-container');
                 const existingImage = questionContainer.querySelector('.question-image');
                 if (existingImage) {
                     existingImage.remove();
                 }
                 
-                const img = document.createElement('div');
+                // ✅ Create actual img element instead of div
+                const img = document.createElement('img');
                 img.className = 'question-image';
-                img.textContent = question.image;
+                img.src = question.image;
+                img.alt = question.question;
+                img.onerror = function() {
+                    // Hide image if file doesn't exist and show a placeholder
+                    this.style.display = 'none';
+                    console.log('Image not found:', question.image);
+                    
+                    // Create a text placeholder instead
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'question-image';
+                    placeholder.style.cssText = `
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        color: white;
+                        padding: 20px;
+                        border-radius: 15px;
+                        text-align: center;
+                        font-weight: bold;
+                        margin: 0 auto 15px auto;
+                        max-width: 200px;
+                    `;
+                    placeholder.textContent = '📷 ' + question.type.toUpperCase();
+                    this.parentNode.insertBefore(placeholder, this);
+                };
                 
                 const questionText = document.getElementById('question-text');
                 questionText.parentNode.insertBefore(img, questionText);
