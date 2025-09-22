@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colors & Objects Match - ESL Practice</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/games.css">
+    <style>
+        /* Additional styles for drag and drop game */
+        .game-round {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .round-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .drag-drop-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+            min-height: 400px;
+        }
+
+        .draggable-item {
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .draggable-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .draggable-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            cursor: grabbing;
+        }
+
+        .draggable-item img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .drop-zone {
+            background: #f8f9fa;
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 0.5rem;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #48bb78;
+            background: #f0fff4;
+            transform: scale(1.02);
+        }
+
+        .drop-zone.correct {
+            border-color: #48bb78;
+            background: linear-gradient(135deg, #48bb78, #38b2ac);
+            color: white;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .drop-zone.incorrect {
+            border-color: #f56565;
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            color: white;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        .drop-zone h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .sources-container, .targets-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .sources-container h3, .targets-container h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .round-complete {
+            background: linear-gradient(135deg, #48bb78, #38b2ac);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .next-round-btn {
+            background: white;
+            color: #48bb78;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: inherit;
+        }
+
+        .progress-bar {
+            background: rgba(203, 213, 224, 0.5);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #48bb78, #38b2ac);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        @media (max-width: 768px) {
+            .drag-drop-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .draggable-item {
+                min-height: 100px;
+            }
+            
+            .drop-zone {
+                min-height: 120px;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <!-- Game Header Navigation -->
+    <div class="game-header">
+        <div class="game-nav">
+            <a href="../month-one/month-one.html" class="back-btn">
+                ← Back to Month 1
+            </a>
+            <div class="game-title">Colors & Objects Match</div>
+            <div class="best-score" id="display-best-score" style="display: none;">
+                Best: 0%
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Welcome Message -->
+    <div class="student-welcome" id="student-welcome" style="display: none;">
+        Good luck, <span id="student-name">Student</span>! 🚀
+    </div>
+
+    <div class="game-container">
+        <h1>🎨 Colors & Objects Match</h1>
+        <p class="game-subtitle">Drag items to match colors and objects!</p>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-number" id="current-score">0</div>
+                <div class="score-label">Correct</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="round-number">1</div>
+                <div class="score-label">Round</div>
+            </div>
+            <div class="score-item">
+                <div class="score-number" id="total-rounds">5</div>
+                <div class="score-label">Total</div>
+            </div>
+        </div>
+
+        <div class="round-info" id="round-info">
+            <h3 id="round-title">Round 1: Study Space (Easy)</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="round-progress"></div>
+            </div>
+            <p id="round-instruction">Drag each item to the correct description!</p>
+        </div>
+
+        <div class="question-container">
+            <div class="drag-drop-container" id="game-area">
+                <div class="sources-container">
+                    <h3 id="source-title">Items to Match</h3>
+                    <div id="draggable-items"></div>
+                </div>
+                
+                <div class="targets-container">
+                    <h3 id="target-title">Drop Zones</h3>
+                    <div id="drop-zones"></div>
+                </div>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="round-complete" id="round-complete">
+                <h3>🎉 Round Complete!</h3>
+                <p id="round-score">You got 0 out of 0 correct!</p>
+                <button class="next-round-btn" id="next-round-btn">Next Round →</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/student-tracker.js"></script>
+    <script>
+        class ColorsObjectsGame {
+            constructor() {
+                this.rounds = [
+                    {
+                        name: "Study Space",
+                        difficulty: "Easy",
+                        items: [
+                            // Format 1: Image → Sentence
+                            { 
+                                format: "image-to-text",
+                                image: "brown-wooden-desk.png",
+                                imageDesc: "Brown wooden desk",
+                                correct: "It's a brown desk",
+                                incorrect: "The chair is brown"
+                            },
+                            {
+                                format: "image-to-text", 
+                                image: "red-book.png",
+                                imageDesc: "Red textbook",
+                                correct: "It's a red book",
+                                incorrect: "The pen is red"
+                            },
+                            // Format 2: Text → Image
+                            {
+                                format: "text-to-image",
+                                text: "My chair is blue",
+                                correctImage: "blue-office-chair.png",
+                                correctDesc: "Blue office chair",
+                                incorrectImage: "green-plant.png", 
+                                incorrectDesc: "Green plant in pot"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "The lamp is white",
+                                correctImage: "white-desk-lamp.png",
+                                correctDesc: "White desk lamp",
+                                incorrectImage: "black-computer.png",
+                                incorrectDesc: "Black laptop computer"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Kitchen",
+                        difficulty: "Medium", 
+                        items: [
+                            {
+                                format: "image-to-text",
+                                image: "yellow-banana.png",
+                                imageDesc: "Yellow ripe banana",
+                                correct: "It's a yellow banana",
+                                incorrect: "The apple is yellow"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "My cup is green",
+                                correctImage: "green-coffee-mug.png",
+                                correctDesc: "Green coffee mug",
+                                incorrectImage: "red-apple.png",
+                                incorrectDesc: "Red apple"
+                            },
+                            {
+                                format: "image-to-text",
+                                image: "white-refrigerator.png", 
+                                imageDesc: "White refrigerator",
+                                correct: "The refrigerator is white",
+                                incorrect: "It's a white plate"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "The plate is blue",
+                                correctImage: "blue-dinner-plate.png",
+                                correctDesc: "Blue dinner plate", 
+                                incorrectImage: "orange-orange.png",
+                                incorrectDesc: "Orange citrus fruit"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Living Room",
+                        difficulty: "Medium+",
+                        items: [
+                            {
+                                format: "image-to-text",
+                                image: "brown-leather-sofa.png",
+                                imageDesc: "Brown leather sofa",
+                                correct: "The sofa is brown", 
+                                incorrect: "It's a brown table"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "My pillow is pink",
+                                correctImage: "pink-throw-pillow.png",
+                                correctDesc: "Pink decorative pillow",
+                                incorrectImage: "gray-remote.png",
+                                incorrectDesc: "Gray TV remote"
+                            },
+                            {
+                                format: "image-to-text",
+                                image: "black-television.png",
+                                imageDesc: "Black flat-screen TV",
+                                correct: "It's a black TV",
+                                incorrect: "The window is black"
+                            },
+                            {
+                                format: "text-to-image", 
+                                text: "The carpet is purple",
+                                correctImage: "purple-area-rug.png",
+                                correctDesc: "Purple area rug",
+                                incorrectImage: "yellow-curtains.png", 
+                                incorrectDesc: "Yellow window curtains"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Bedroom",
+                        difficulty: "Hard",
+                        items: [
+                            {
+                                format: "text-to-image",
+                                text: "My sheets are orange",
+                                correctImage: "orange-bed-sheets.png",
+                                correctDesc: "Orange bed sheets",
+                                incorrectImage: "blue-alarm-clock.png",
+                                incorrectDesc: "Blue digital alarm clock"
+                            },
+                            {
+                                format: "image-to-text",
+                                image: "pink-pajamas.png", 
+                                imageDesc: "Pink striped pajamas",
+                                correct: "The pajamas are pink",
+                                incorrect: "It's a pink blanket"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "The wardrobe is gray",
+                                correctImage: "gray-wardrobe.png",
+                                correctDesc: "Gray wooden wardrobe",
+                                incorrectImage: "red-shoes.png",
+                                incorrectDesc: "Red sneakers"
+                            },
+                            {
+                                format: "image-to-text",
+                                image: "green-cactus.png",
+                                imageDesc: "Green small cactus",
+                                correct: "It's a green cactus",
+                                incorrect: "The mirror is green"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Bathroom", 
+                        difficulty: "Hardest",
+                        items: [
+                            {
+                                format: "image-to-text",
+                                image: "blue-towel.png",
+                                imageDesc: "Blue cotton towel",
+                                correct: "The towel is blue",
+                                incorrect: "It's a blue soap"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "My toothbrush is purple",
+                                correctImage: "purple-toothbrush.png", 
+                                correctDesc: "Purple electric toothbrush",
+                                incorrectImage: "white-toilet.png",
+                                incorrectDesc: "White ceramic toilet"
+                            },
+                            {
+                                format: "text-to-image",
+                                text: "The mirror is silver", 
+                                correctImage: "silver-bathroom-mirror.png",
+                                correctDesc: "Silver framed mirror",
+                                incorrectImage: "yellow-rubber-duck.png",
+                                incorrectDesc: "Yellow rubber bath duck"
+                            },
+                            {
+                                format: "image-to-text",
+                                image: "pink-soap.png",
+                                imageDesc: "Pink bar of soap",
+                                correct: "It's pink soap",
+                                incorrect: "The shampoo is pink"
+                            }
+                        ]
+                    }
+                ];
+                
+                this.currentRound = 0;
+                this.currentQuestion = 0;
+                this.score = 0;
+                this.roundScore = 0;
+                this.totalScore = 0;
+                this.totalQuestions = this.rounds.reduce((sum, round) => sum + round.items.length, 0);
+                this.startTime = Date.now();
+                
+                this.initializeGame();
+            }
+
+            initializeGame() {
+                this.showStudentInfo();
+                this.startRound();
+            }
+
+            showStudentInfo() {
+                if (window.studentTracker) {
+                    const studentName = window.studentTracker.getStudentName();
+                    if (studentName) {
+                        document.getElementById('student-name').textContent = studentName;
+                        document.getElementById('student-welcome').style.display = 'block';
+                    }
+
+                    const bestScore = window.studentTracker.getBestScore('colors-objects-match');
+                    if (bestScore > 0) {
+                        document.getElementById('display-best-score').textContent = `Best: ${bestScore}%`;
+                        document.getElementById('display-best-score').style.display = 'block';
+                    }
+                }
+            }
+
+            startRound() {
+                if (this.currentRound >= this.rounds.length) {
+                    this.showFinalScore();
+                    return;
+                }
+
+                const round = this.rounds[this.currentRound];
+                this.currentQuestion = 0;
+                this.roundScore = 0;
+                
+                document.getElementById('round-number').textContent = this.currentRound + 1;
+                document.getElementById('round-title').textContent = `Round ${this.currentRound + 1}: ${round.name} (${round.difficulty})`;
+                document.getElementById('round-complete').style.display = 'none';
+                
+                this.showQuestion();
+            }
+
+            showQuestion() {
+                const round = this.rounds[this.currentRound];
+                
+                if (this.currentQuestion >= round.items.length) {
+                    this.completeRound();
+                    return;
+                }
+
+                const question = round.items[this.currentQuestion];
+                const progress = ((this.currentQuestion) / round.items.length) * 100;
+                document.getElementById('round-progress').style.width = progress + '%';
+                
+                this.clearGameArea();
+                
+                if (question.format === "image-to-text") {
+                    this.showImageToText(question);
+                } else {
+                    this.showTextToImage(question);
+                }
+            }
+
+            clearGameArea() {
+                document.getElementById('draggable-items').innerHTML = '';
+                document.getElementById('drop-zones').innerHTML = '';
+                document.getElementById('feedback').textContent = '';
+            }
+
+            showImageToText(question) {
+                document.getElementById('source-title').textContent = 'Drag the Image';
+                document.getElementById('target-title').textContent = 'To the Correct Sentence';
+                
+                // Create draggable image
+                const draggableItem = this.createDraggableImage(question.image, question.imageDesc, 'item-0');
+                document.getElementById('draggable-items').appendChild(draggableItem);
+                
+                // Create drop zones for sentences
+                const correctZone = this.createTextDropZone(question.correct, true);
+                const incorrectZone = this.createTextDropZone(question.incorrect, false);
+                
+                // Randomize order
+                const zones = Math.random() > 0.5 ? [correctZone, incorrectZone] : [incorrectZone, correctZone];
+                zones.forEach(zone => document.getElementById('drop-zones').appendChild(zone));
+            }
+
+            showTextToImage(question) {
+                document.getElementById('source-title').textContent = 'Drag the Sentence';
+                document.getElementById('target-title').textContent = 'To the Correct Image';
+                
+                // Create draggable text
+                const draggableText = this.createDraggableText(question.text, 'item-0');
+                document.getElementById('draggable-items').appendChild(draggableText);
+                
+                // Create drop zones for images
+                const correctZone = this.createImageDropZone(question.correctImage, question.correctDesc, true);
+                const incorrectZone = this.createImageDropZone(question.incorrectImage, question.incorrectDesc, false);
+                
+                // Randomize order
+                const zones = Math.random() > 0.5 ? [correctZone, incorrectZone] : [incorrectZone, correctZone];
+                zones.forEach(zone => document.getElementById('drop-zones').appendChild(zone));
+            }
+
+            createDraggableImage(imageSrc, imageDesc, id) {
+                const item = document.createElement('div');
+                item.className = 'draggable-item';
+                item.draggable = true;
+                item.id = id;
+                
+                // Create image placeholder
+                const placeholder = document.createElement('div');
+                placeholder.className = 'image-placeholder';
+                placeholder.textContent = imageDesc;
+                
+                item.appendChild(placeholder);
+                
+                this.addDragEvents(item);
+                return item;
+            }
+
+            createDraggableText(text, id) {
+                const item = document.createElement('div');
+                item.className = 'draggable-item';
+                item.draggable = true;
+                item.id = id;
+                item.innerHTML = `<strong>${text}</strong>`;
+                
+                this.addDragEvents(item);
+                return item;
+            }
+
+            createTextDropZone(text, isCorrect) {
+                const zone = document.createElement('div');
+                zone.className = 'drop-zone';
+                zone.innerHTML = `<h3>${text}</h3>`;
+                zone.dataset.correct = isCorrect;
+                
+                this.addDropEvents(zone);
+                return zone;
+            }
+
+            createImageDropZone(imageSrc, imageDesc, isCorrect) {
+                const zone = document.createElement('div');
+                zone.className = 'drop-zone';
+                zone.dataset.correct = isCorrect;
+                
+                const placeholder = document.createElement('div');
+                placeholder.className = 'image-placeholder';
+                placeholder.style.width = '100px';
+                placeholder.style.height = '100px';
+                placeholder.textContent = imageDesc;
+                
+                zone.appendChild(placeholder);
+                
+                this.addDropEvents(zone);
+                return zone;
+            }
+
+            addDragEvents(item) {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', item.id);
+                    item.classList.add('dragging');
+                });
+
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                });
+            }
+
+            addDropEvents(zone) {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    const draggedItem = document.getElementById(draggedId);
+                    
+                    if (draggedItem) {
+                        this.handleDrop(zone, draggedItem);
+                    }
+                });
+            }
+
+            handleDrop(zone, item) {
+                const isCorrect = zone.dataset.correct === 'true';
+                const feedback = document.getElementById('feedback');
+                
+                // Disable all dragging
+                document.querySelectorAll('.draggable-item').forEach(el => {
+                    el.draggable = false;
+                    el.style.cursor = 'not-allowed';
+                });
+                
+                if (isCorrect) {
+                    zone.classList.add('correct');
+                    this.score++;
+                    this.roundScore++;
+                    this.totalScore++;
+                    feedback.textContent = '🎉 Excellent! Perfect match!';
+                    feedback.className = 'feedback correct';
+                } else {
+                    zone.classList.add('incorrect');
+                    // Highlight correct answer
+                    document.querySelectorAll('.drop-zone').forEach(z => {
+                        if (z.dataset.correct === 'true') {
+                            z.classList.add('correct');
+                        }
+                    });
+                    feedback.textContent = '❌ Not quite right! Look at the correct answer.';
+                    feedback.className = 'feedback incorrect';
+                }
+                
+                document.getElementById('current-score').textContent = this.totalScore;
+                
+                // Move to next question after delay
+                setTimeout(() => {
+                    this.currentQuestion++;
+                    this.showQuestion();
+                }, 2000);
+            }
+
+            completeRound() {
+                const round = this.rounds[this.currentRound];
+                document.getElementById('round-progress').style.width = '100%';
+                
+                const roundComplete = document.getElementById('round-complete');
+                document.getElementById('round-score').textContent = 
+                    `You got ${this.roundScore} out of ${round.items.length} correct!`;
+                    
+                roundComplete.style.display = 'block';
+                
+                document.getElementById('next-round-btn').onclick = () => {
+                    this.currentRound++;
+                    this.startRound();
+                };
+            }
+
+            showFinalScore() {
+                const percentage = Math.round((this.totalScore / this.totalQuestions) * 100);
+                const timeSpent = Math.round((Date.now() - this.startTime) / 1000 / 60 * 10) / 10;
+                
+                let celebration = '';
+                let message = '';
+                
+                if (percentage >= 90) {
+                    celebration = '🏆🎉🌟';
+                    message = 'AMAZING! You\'re a colors and objects expert!';
+                } else if (percentage >= 80) {
+                    celebration = '🎉⭐';
+                    message = 'EXCELLENT work! Great matching skills!';
+                } else if (percentage >= 70) {
+                    celebration = '👏😊';
+                    message = 'GOOD job! Keep practicing those colors!';
+                } else {
+                    celebration = '💪📚';
+                    message = 'Keep trying! Practice makes perfect!';
+                }
+
+                if (window.studentTracker) {
+                    window.studentTracker.saveGameScore('colors-objects-match', percentage, timeSpent);
+                }
+
+                const container = document.querySelector('.question-container');
+                container.innerHTML = `
+                    <div class="final-score">
+                        <div class="celebration">${celebration}</div>
+                        <h2>${message}</h2>
+                        <p style="font-size: 1.5em; margin: 20px 0;">
+                            You got <strong>${this.totalScore}</strong> out of <strong>${this.totalQuestions}</strong> correct!
+                        </p>
+                        <p style="font-size: 1.3em; margin: 10px 0;">
+                            That's <strong>${percentage}%</strong>!
+                        </p>
+                        <p style="margin: 10px 0;">
+                            Time: <strong>${timeSpent} minutes</strong>
+                        </p>
+                        <button class="restart-btn" onclick="location.reload()">
+                            🔄 Play Again
+                        </button>
+                        <br>
+                        <a href="../month-one/month-one.html" class="cta-button" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+                            🏠 Back to Month 1
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // Wait for student tracker to load, then start game
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                new ColorsObjectsGame();
+            }, 100);
+        });
+
+        // Create floating shapes periodically
+        function createFloatingShape() {
+            const shape = document.createElement('div');
+            shape.className = 'floating-shape';
+            shape.style.width = Math.random() * 60 + 20 + 'px';
+            shape.style.height = shape.style.width;
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.animationDuration = Math.random() * 20 + 15 + 's';
+            shape.style.animationDelay = Math.random() * 5 + 's';
+            
+            const shapesContainer = document.querySelector('.floating-shapes');
+            if (shapesContainer) {
+                shapesContainer.appendChild(shape);
+                
+                setTimeout(() => {
+                    if (shape.parentElement) {
+                        shape.remove();
+                    }
+                }, 25000);
+            }
+        }
+
+        setInterval(createFloatingShape, 3000);
+    </script>
+</body>
+</html>
