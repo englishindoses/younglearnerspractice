@@ -89,15 +89,18 @@
                     </button>
                 </div>
 
-                <!-- Coming Soon: Colors Game -->
+                <!-- Colors & Objects Match Game -->
                 <div class="game-card">
                     <h3>🎨 Colors & Objects Match</h3>
                     <p>Match classroom objects with their colors in this fun drag-and-drop game.</p>
-                    <p><strong>Skills:</strong> Vocabulary, Visual Recognition</p>
-                    <p><strong>Activity:</strong> Interactive matching</p>
-                    <div class="achievement">🔒 Coming Soon</div>
-                    <button class="play-button" disabled>
-                        <span class="loading"></span> In Development
+                    <p><strong>Skills:</strong> Vocabulary, Visual Recognition, Drag & Drop</p>
+                    <p><strong>Activity:</strong> 5 rounds of increasing difficulty</p>
+                    <div class="achievement">✅ Ready to Play</div>
+                    <div class="best-score" id="colours-objects-best" style="display: none;">
+                        Your best: 0%
+                    </div>
+                    <button class="play-button" onclick="window.open('colours-objects-match.html', '_blank')">
+                        🎯 Play Now
                     </button>
                 </div>
 
@@ -125,18 +128,15 @@
                     </button>
                 </div>
 
-                <!-- Interactive Revision Activity -->
+                <!-- Coming Soon: Greeting Scenarios -->
                 <div class="game-card">
-                    <h3>📚 Interactive Revision</h3>
-                    <p>Review everything you've learned in Month 1 with this comprehensive interactive worksheet!</p>
-                    <p><strong>Skills:</strong> All Month 1 Topics, Memory, Review</p>
-                    <p><strong>Activity:</strong> Digital worksheet practice</p>
-                    <div class="achievement">✅ Ready to Play</div>
-                    <div class="best-score" id="interactive-revision-best" style="display: none;">
-                        Your progress: 0%
-                    </div>
-                    <button class="play-button" onclick="window.open('interactive-revision.html', '_blank')">
-                        🎯 Start Revision
+                    <h3>👋 Greeting Master</h3>
+                    <p>Practice different greeting scenarios for various times of day and situations.</p>
+                    <p><strong>Skills:</strong> Social English, Context</p>
+                    <p><strong>Activity:</strong> Scenario practice</p>
+                    <div class="achievement">🔒 Coming Soon</div>
+                    <button class="play-button" disabled>
+                        <span class="loading"></span> In Development
                     </button>
                 </div>
 
@@ -217,7 +217,7 @@
         // Month 1 specific functionality
         class Month1Page {
             constructor() {
-                this.month1Games = ['hello-numbers'];
+                this.month1Games = ['hello-numbers', 'colours-objects-match'];
                 this.initializePage();
             }
 
@@ -281,6 +281,14 @@
                 if (helloNumbersScore > 0) {
                     const scoreElement = document.getElementById('hello-numbers-best');
                     scoreElement.textContent = `Your best: ${helloNumbersScore}%`;
+                    scoreElement.style.display = 'block';
+                }
+
+                // Update Colors Objects Game score
+                const coloursObjectsScore = window.studentTracker.getBestScore('colours-objects-match');
+                if (coloursObjectsScore > 0) {
+                    const scoreElement = document.getElementById('colours-objects-best');
+                    scoreElement.textContent = `Your best: ${coloursObjectsScore}%`;
                     scoreElement.style.display = 'block';
                 }
             }
